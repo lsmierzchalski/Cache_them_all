@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Cache_them_all</string>
+    <string name="app_name_bar">Cache them all!!!</string>
+
+    <string name="opencaching_pl">opencaching.pl</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+</resources>
