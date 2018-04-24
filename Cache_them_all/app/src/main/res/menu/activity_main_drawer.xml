@@ -5,11 +5,11 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_camera"
-            android:title="Import" />
+            android:id="@+id/first_fragment"
+            android:title="First Fragment" />
         <item
-            android:id="@+id/nav_gallery"
-            android:title="Gallery" />
+            android:id="@+id/second_fragment"
+            android:title="Second Fragment" />
     </group>
 <!--
     <item android:title="Communicate">

@@ -24,6 +24,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         toggle.syncState()
 
         nav_view.setNavigationItemSelectedListener(this)
+
+        displayScreen(R.id.first_fragment)
     }
 
     override fun onBackPressed() {
@@ -34,17 +36,35 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
     }
 
-    override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        // Handle navigation view item clicks here.
-        when (item.itemId) {
-            R.id.nav_camera -> {
-                // Handle the camera action
-            }
-            R.id.nav_gallery -> {
+    fun  displayScreen (id: Int){
+        val fragment = when (id){
 
+            R.id.first_fragment -> {
+                FirstFragment()
+            }
+
+            R.id.second_fragment -> {
+                SecondFragment()
+            }
+/*
+        //ale jestem głupi tu musi być fragment (patrz wywolanie funkcji nizej i inicjalizacje zmiennej wyzej)
+            else -> {
+                ErrorFragment()
+            }*/
+            else -> {
+                FirstFragment()
             }
         }
 
+
+        supportFragmentManager.beginTransaction()
+                .replace(R.id.relativelayout, fragment)
+                .commit()
+
+    }
+
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        displayScreen(item.itemId)
         drawer_layout.closeDrawer(GravityCompat.START)
         return true
     }
