@@ -46,6 +46,14 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.second_fragment -> {
                 SecondFragment()
             }
+
+            R.id.parse_json_fragment -> {
+                ParseJsonUsingVolleyFragment()
+            }
+
+            R.id.parse_json_nearset_fragment ->{
+                ParseJsonNearsetJavaFragment()
+            }
 /*
         //ale jestem głupi tu musi być fragment (patrz wywolanie funkcji nizej i inicjalizacje zmiennej wyzej)
             else -> {

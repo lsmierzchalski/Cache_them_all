@@ -15,4 +15,9 @@
 
     <string name="customer_key">s4Fh8erAUZxEtEY98L8B</string>
 
+
+    <!-- współrzędne geograficzne -->
+    <string name="gps_coordinate">Geographic coordinate</string>
+    <string name="latitude">latitude</string>
+    <string name="longitude">longitude</string>
 </resources>
