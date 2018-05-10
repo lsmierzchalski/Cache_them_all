@@ -1,5 +1,6 @@
 package pl.wti.projekt.cache_them_all
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.design.widget.NavigationView
@@ -26,6 +27,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         nav_view.setNavigationItemSelectedListener(this)
 
         displayScreen(R.id.first_fragment)
+
+        val intent = Intent(baseContext, MapsActivity::class.java)
+        startActivity(intent)
     }
 
     override fun onBackPressed() {
