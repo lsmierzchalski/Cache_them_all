@@ -16,6 +16,9 @@
         <item
             android:id="@+id/parse_json_nearset_fragment"
             android:title="Parse Json Nearset Fragment" />
+        <item
+            android:id="@+id/test_map_fragment"
+            android:title="Test Map Fragment" />
     </group>
 <!--
     <item android:title="Communicate">

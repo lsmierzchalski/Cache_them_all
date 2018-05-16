@@ -1,6 +1,5 @@
 package pl.wti.projekt.cache_them_all
 
-
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
@@ -9,8 +8,8 @@ import android.view.ViewGroup
 import android.widget.Toast
 import kotlinx.android.synthetic.main.fragment_second.*
 import okhttp3.*
+import pl.wti.projekt.cache_them_all.R.id.text_data
 import java.io.IOException
-
 
 /**
  * A simple [Fragment] subclass.

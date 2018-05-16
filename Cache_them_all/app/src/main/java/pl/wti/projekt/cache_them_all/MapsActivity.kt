@@ -50,7 +50,7 @@ class MapsActivity() : AppCompatActivity(), OnMapReadyCallback, OnMarkerClickLis
                 .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
 
-        //fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
     }
 
     /**
@@ -70,15 +70,14 @@ class MapsActivity() : AppCompatActivity(), OnMapReadyCallback, OnMarkerClickLis
         mMap.setOnMarkerClickListener(this)
 
         // Add a marker in Sydney and move the camera
-        val sydney = LatLng(-34.0, 151.0)
-        mMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+        //val sydney = LatLng(-34.0, 151.0)
+        //mMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
 
         //val bolewice = LatLng(-34.0, 151.0)
         setUpMap()
     }
 
-    //Pytanie użytkownika czy chce daś lokalizacje
+    //lokalizacja urzytkownika
     private fun setUpMap() {
         if (ActivityCompat.checkSelfPermission(this,
                 android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -89,16 +88,15 @@ class MapsActivity() : AppCompatActivity(), OnMapReadyCallback, OnMarkerClickLis
         // 1
         mMap.isMyLocationEnabled = true
 
-        /*
         // 2
         fusedLocationClient.lastLocation.addOnSuccessListener(this) { location ->
             // Got last known location. In some rare situations this can be null.
-            // 3
+            // 3 - ładnie wygląda kiedy ładuje sięmapa z animacją na obecną lokalizację GPS
             if (location != null) {
                 lastLocation = location
                 val currentLatLng = LatLng(location.latitude, location.longitude)
-                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 12f))
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 15f))
             }
-        }*/
+        }
     }
 }
