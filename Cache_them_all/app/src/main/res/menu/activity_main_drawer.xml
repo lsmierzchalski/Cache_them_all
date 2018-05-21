@@ -19,6 +19,12 @@
         <item
             android:id="@+id/test_map_fragment"
             android:title="Test Map Fragment" />
+        <item
+            android:id="@+id/test_cache_manager"
+            android:title="Test CacheManager"/>
+        <item
+            android:id="@+id/test_map_with_cache"
+            android:title="Test Map With Cache"/>
     </group>
 <!--
     <item android:title="Communicate">

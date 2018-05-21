@@ -31,8 +31,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         nav_view.setNavigationItemSelectedListener(this)
 
-        displayScreen(R.id.first_fragment)
+        displayScreen(R.id.test_map_with_cache)
 
+        val str : String = resources.getString(R.string.customer_key)
         //val intent = Intent(baseContext, MapsActivity::class.java)
         startActivity(intent)
     }
@@ -67,11 +68,15 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.test_map_fragment ->{
                 MapsFragment()
             }
-    /*
-    //ale jestem głupi tu musi być fragment (patrz wywolanie funkcji nizej i inicjalizacje zmiennej wyzej)
-        else -> {
-            ErrorFragment()
-        }*/
+
+            R.id.test_cache_manager ->{
+                TestCacheManagerFragment()
+            }
+
+            R.id.test_map_with_cache ->{
+                TestMapsWithNearseCacheFragment()
+            }
+
             else -> {
                 FirstFragment()
             }

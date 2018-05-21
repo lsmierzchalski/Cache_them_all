@@ -18,7 +18,6 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 
-
 /**
  * A simple [Fragment] subclass.
  */
@@ -56,7 +55,6 @@ class MapsFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickList
         map.setOnMarkerClickListener(this)
 
         setUpMap()
-
     }
 
     //lokalizacja urzytkownika
