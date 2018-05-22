@@ -46,7 +46,13 @@ import pl.wti.projekt.cache_them_all.caches.stringToLatLng
 /**
  * A simple [Fragment] subclass.
  */
-class TestMapsWithNearseCacheFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
+class TestMapsWithNearseCacheFragment : Fragment(),
+        OnMapReadyCallback,
+        GoogleMap.OnMarkerClickListener,
+        GoogleMap.OnCameraMoveCanceledListener,
+        GoogleMap.OnCameraMoveStartedListener,
+        GoogleMap.OnCameraMoveListener,
+        GoogleMap.OnCameraIdleListener{
 
     lateinit var map : GoogleMap
 
@@ -85,6 +91,12 @@ class TestMapsWithNearseCacheFragment : Fragment(), OnMapReadyCallback, GoogleMa
         map.getUiSettings().setZoomControlsEnabled(true)
         map.setOnMarkerClickListener(this)
 
+
+        map.setOnCameraIdleListener(this);
+        map.setOnCameraMoveStartedListener(this);
+        map.setOnCameraMoveListener(this);
+        map.setOnCameraMoveCanceledListener(this);
+
         setUpMap()
 
     }
@@ -110,15 +122,22 @@ class TestMapsWithNearseCacheFragment : Fragment(), OnMapReadyCallback, GoogleMa
                 val currentLatLng = LatLng(location.latitude, location.longitude)
                 map.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 15f))
 
-                showCacheMarker()
+                showCacheMarker(lastLocation.latitude.toString(), lastLocation.longitude.toString())
+            }
+            else{
+                var loc = LatLng(52.39546319, 16.95475321)
+                map.moveCamera(CameraUpdateFactory
+                        .newLatLngZoom(loc, 15f))
+                showCacheMarker(loc.latitude.toString(), loc.longitude.toString())
+
             }
         }
     }
 
-    private fun showCacheMarker(){
+    private fun showCacheMarker(latitude:String, longitude:String){
         var key : String = resources.getString(R.string.customer_key)
 
-        var url : String  = "https://opencaching.pl/okapi/services/caches/search/nearest?center=" + lastLocation.latitude + "|" + lastLocation.longitude + "&consumer_key=" + key
+        var url : String  = "https://opencaching.pl/okapi/services/caches/search/nearest?center=" + latitude + "|" + longitude + "&consumer_key=" + key
 
         val request = JsonObjectRequest(Request.Method.GET, url, null, Listener { response ->
             try {
@@ -126,32 +145,40 @@ class TestMapsWithNearseCacheFragment : Fragment(), OnMapReadyCallback, GoogleMa
                 val jsonArray = response.getJSONArray("results")
                 for (i in 0 until jsonArray.length()) {
 
-                    url = "https://opencaching.pl/okapi/services/caches/geocache?cache_code=" + jsonArray.getString(i) + "&consumer_key=" + key
+                    var isOnMap : Boolean = false
 
-                    //Log.d("->",url);
+                    for(cache in caches){
+                        if(jsonArray.getString(i) == cache.code) isOnMap = true
+                    }
 
-                    val requestCache = JsonObjectRequest(Request.Method.GET, url, null, Listener { response ->
-                        try {
-                            var newCache: Cache = Cache(jsonArray.getString(i))
-                            newCache.name = response.getString("name").toString()
-                            newCache.locationS = response.getString("location").toString()
-                            newCache.location = stringToLocation(response.getString("location"))
-                            newCache.locationLL = stringToLatLng(response.getString("location"))
-                            newCache.type = response.getString("type")
-                            newCache.status = response.getString("status")
-                            caches.add(newCache)
+                    if(!isOnMap){
+                        url = "https://opencaching.pl/okapi/services/caches/geocache?cache_code=" + jsonArray.getString(i) + "&consumer_key=" + key
 
-                            //Log.d("->", locationToString(newCache.location));
-                            map.addMarker(MarkerOptions().position(newCache.locationLL).title(newCache.name).snippet(newCache.code))
+                        //Log.d("->",url);
 
-                        } catch (e: JSONException) {
-                            e.printStackTrace()
-                        }
-                    }, Response.ErrorListener { error -> error.printStackTrace() })
-                    mQueue.add(requestCache)
-                    /*
-                        Abrakadabra to czary i magia
-                    */
+                        val requestCache = JsonObjectRequest(Request.Method.GET, url, null, Listener { response ->
+                            try {
+                                var newCache: Cache = Cache(jsonArray.getString(i))
+                                newCache.name = response.getString("name").toString()
+                                newCache.locationS = response.getString("location").toString()
+                                newCache.location = stringToLocation(response.getString("location"))
+                                newCache.locationLL = stringToLatLng(response.getString("location"))
+                                newCache.type = response.getString("type")
+                                newCache.status = response.getString("status")
+                                caches.add(newCache)
+
+                                //Log.d("->", locationToString(newCache.location));
+                                map.addMarker(MarkerOptions().position(newCache.locationLL).title(newCache.name).snippet(newCache.code))
+
+                            } catch (e: JSONException) {
+                                e.printStackTrace()
+                            }
+                        }, Response.ErrorListener { error -> error.printStackTrace() })
+                        mQueue.add(requestCache)
+                        /*
+                            Abrakadabra to czary i magia
+                        */
+                    }
                 }
             } catch (e: JSONException) {
                 e.printStackTrace()
@@ -175,6 +202,44 @@ class TestMapsWithNearseCacheFragment : Fragment(), OnMapReadyCallback, GoogleMa
 
         return false
     }
+
+    override fun onCameraMoveStarted(reason : Int) {
+
+        if (reason == GoogleMap.OnCameraMoveStartedListener.REASON_GESTURE) {
+            Toast.makeText(context, "The user gestured on the map.",
+                           Toast.LENGTH_SHORT).show();
+        } else if (reason == GoogleMap.OnCameraMoveStartedListener
+                                .REASON_API_ANIMATION) {
+            Toast.makeText(context, "The user tapped something on the map.",
+                           Toast.LENGTH_SHORT).show();
+        } else if (reason == GoogleMap.OnCameraMoveStartedListener
+                                .REASON_DEVELOPER_ANIMATION) {
+            Toast.makeText(context, "The app moved the camera.",
+                           Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    override fun onCameraMove() {
+        //Toast.makeText(context, "The camera is moving.",Toast.LENGTH_SHORT).show();
+        Log.d("camera","moving")
+
+    }
+
+    override fun onCameraMoveCanceled() {
+        Toast.makeText(context, "Camera movement canceled.", Toast.LENGTH_SHORT).show()
+
+    }
+
+    override fun onCameraIdle() {
+
+        //var t : String = "The camera has stopped moving."+map.cameraPosition.target.latitude.toString()+"|"+map.cameraPosition.target.latitude.toString()+"."
+        //Toast.makeText(context, t, Toast.LENGTH_SHORT).show()
+        //Log.d("map",t)
+
+        showCacheMarker(map.cameraPosition.target.latitude.toString(), map.cameraPosition.target.longitude.toString())
+
+    }
+
 /*
     public fun chkGPSorNetworkEnabled(){
         var locationManager : LocationManager = context.getSystemService(LOCATION_SERVICE) as LocationManager
