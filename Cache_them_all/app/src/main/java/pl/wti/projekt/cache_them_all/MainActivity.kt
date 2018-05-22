@@ -77,6 +77,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 TestMapsWithNearseCacheFragment()
             }
 
+            R.id.test_dialog_box ->{
+                TestDialogBoxFragment()
+            }
+
             else -> {
                 FirstFragment()
             }

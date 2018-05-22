@@ -1,0 +1,26 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="pl.wti.projekt.cache_them_all.TestDialogBoxFragment">
+    <Button
+        android:layout_margin="10dp"
+        android:id="@+id/open_dialog"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+        android:background="@android:color/holo_orange_light"
+        android:textColor="#555555"
+        android:singleLine="true"
+        android:textSize="18dp"
+        android:text="open dialog box"/>
+
+    <TextView
+        android:id="@+id/textView_types_of_caches"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/open_dialog"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="97dp"
+        android:text="TextView" />
+</RelativeLayout>

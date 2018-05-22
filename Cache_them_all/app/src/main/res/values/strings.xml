@@ -20,4 +20,18 @@
     <string name="latitude">latitude</string>
     <string name="longitude">longitude</string>
     <string name="title_activity_maps">Map</string>
+
+    <!-- typy skrzynek -->
+    <string name="title_type_of_caches">Show types of geocaches.</string>
+    <string-array name="types_of_caches">
+        <item>Traditional</item>
+        <item>Multicache</item>
+        <item>Quiz</item>
+        <item>Virtual</item>
+        <item>Event</item>
+        <item>Unusual</item>
+        <item>Webcam</item>
+        <item>Mobile</item>
+        <item>Owncache</item>
+    </string-array>
 </resources>

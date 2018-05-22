@@ -25,6 +25,9 @@
         <item
             android:id="@+id/test_map_with_cache"
             android:title="Test Map With Cache"/>
+        <item
+            android:id="@+id/test_dialog_box"
+            android:title="Test Dialog Box"/>
     </group>
 <!--
     <item android:title="Communicate">
