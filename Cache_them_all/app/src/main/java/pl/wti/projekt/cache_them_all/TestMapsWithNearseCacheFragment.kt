@@ -30,6 +30,7 @@ import pl.wti.projekt.cache_them_all.caches.locationToString
 import pl.wti.projekt.cache_them_all.caches.stringToLocation
 import com.android.volley.Response.Listener
 import com.android.volley.toolbox.Volley
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.MarkerOptions
 import pl.wti.projekt.cache_them_all.caches.stringToLatLng
 
@@ -130,6 +131,8 @@ class TestMapsWithNearseCacheFragment : Fragment(),
 
         var url : String  = "https://opencaching.pl/okapi/services/caches/search/nearest?center=" + latitude + "|" + longitude + "&consumer_key=" + key
 
+        var tmp : Boolean = true
+
         val request = JsonObjectRequest(Request.Method.GET, url, null, Listener { response ->
             try {
 
@@ -159,7 +162,12 @@ class TestMapsWithNearseCacheFragment : Fragment(),
                                 caches.add(newCache)
 
                                 //Log.d("->", locationToString(newCache.location));
-                                map.addMarker(MarkerOptions().position(newCache.locationLL).title(newCache.name).snippet(newCache.code))
+                                if(tmp){
+                                    map.addMarker(MarkerOptions().position(newCache.locationLL).title(newCache.name).snippet(newCache.code).icon(BitmapDescriptorFactory.fromResource(R.drawable.event_marker)))
+                                }else{
+                                    map.addMarker(MarkerOptions().position(newCache.locationLL).title(newCache.name).snippet(newCache.code).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW)))
+                                }
+                                tmp = !tmp
 
                             } catch (e: JSONException) {
                                 e.printStackTrace()

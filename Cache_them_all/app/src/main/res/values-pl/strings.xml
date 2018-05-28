@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- współrzędne geograficzne -->
+    <string name="gps_coordinate">Współrzędne geograficzne</string>
+    <string name="latitude">szerokość</string>
+    <string name="longitude">długość</string>
+    <string name="title_activity_maps">Mapa</string>
+
+    <!-- typy skrzynek -->
+    <string name="title_type_of_caches">Pokaż typy skrzynek.</string>
+    <string-array name="types_of_caches_name_in_filtr">
+        <item>Tradycyjna</item>
+        <item>Multicache</item>
+        <item>Quiz</item>
+        <item>Wirtualna</item>
+        <item>Wydarzenie</item>
+        <item>Nietypowa</item>
+        <item>Webcam</item>
+        <item>Mobile</item>
+        <item>Owncache</item>s
+    </string-array>
+
+</resources>

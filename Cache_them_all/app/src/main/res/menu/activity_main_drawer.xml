@@ -28,6 +28,9 @@
         <item
             android:id="@+id/test_dialog_box"
             android:title="Test Dialog Box"/>
+        <item
+            android:id="@+id/test_map_with_filtr"
+            android:title="Test Map With Filtr"/>
     </group>
 <!--
     <item android:title="Communicate">

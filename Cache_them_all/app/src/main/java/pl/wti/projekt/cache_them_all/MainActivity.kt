@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         nav_view.setNavigationItemSelectedListener(this)
 
-        displayScreen(R.id.test_map_with_cache)
+        displayScreen(R.id.test_map_with_filtr)
 
         val str : String = resources.getString(R.string.customer_key)
         //val intent = Intent(baseContext, MapsActivity::class.java)
@@ -79,6 +79,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
             R.id.test_dialog_box ->{
                 TestDialogBoxFragment()
+            }
+
+            R.id.test_map_with_filtr ->{
+                TestMapWithFiltrCache()
             }
 
             else -> {

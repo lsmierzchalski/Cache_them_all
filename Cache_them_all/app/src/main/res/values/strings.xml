@@ -25,13 +25,24 @@
     <string name="title_type_of_caches">Show types of geocaches.</string>
     <string-array name="types_of_caches">
         <item>Traditional</item>
+        <item>Multi</item>
+        <item>Quiz</item>
+        <item>Virtual</item>
+        <item>Event</item>
+        <item>Other</item>
+        <item>Webcam</item>
+        <item>Moving</item>
+        <item>Own</item>
+    </string-array>
+    <string-array name="types_of_caches_name_in_filtr">
+        <item>Traditional</item>
         <item>Multicache</item>
         <item>Quiz</item>
         <item>Virtual</item>
         <item>Event</item>
-        <item>Unusual</item>
+        <item>Other</item>
         <item>Webcam</item>
-        <item>Mobile</item>
+        <item>Moving</item>
         <item>Owncache</item>
     </string-array>
 </resources>
