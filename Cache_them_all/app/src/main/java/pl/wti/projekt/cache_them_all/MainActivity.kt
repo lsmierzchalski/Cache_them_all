@@ -31,10 +31,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         nav_view.setNavigationItemSelectedListener(this)
 
-        displayScreen(R.id.test_map_with_filtr)
+        displayScreen(R.id.detail_cahce)
 
-        val str : String = resources.getString(R.string.customer_key)
-        //val intent = Intent(baseContext, MapsActivity::class.java)
         startActivity(intent)
     }
 
@@ -83,6 +81,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
             R.id.test_map_with_filtr ->{
                 TestMapWithFiltrCache()
+            }
+
+            R.id.detail_cahce ->{
+                CacheDetailsFragment()
             }
 
             else -> {

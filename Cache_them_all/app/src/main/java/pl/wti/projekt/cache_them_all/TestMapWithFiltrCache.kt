@@ -58,6 +58,7 @@ class TestMapWithFiltrCache : Fragment(),
 
     //filtr dialog
     lateinit var listCaches: Array<String>
+    lateinit var listCachesShowText: Array<String>
     lateinit var checkedCaches: BooleanArray
     lateinit var mUserCaches: BooleanArray
     lateinit var tmpCaches: BooleanArray
@@ -78,22 +79,21 @@ class TestMapWithFiltrCache : Fragment(),
         super.onViewCreated(view, savedInstanceState)
 
         //filtr skrzynek
-        listCaches = resources.getStringArray(R.array.types_of_caches)
-        checkedCaches = BooleanArray(listCaches.size)
-        tmpCaches = BooleanArray(listCaches.size)
-        mUserCaches = BooleanArray(listCaches.size)
+        listCachesShowText = resources.getStringArray(R.array.types_of_caches_name_in_filtr)
+        checkedCaches = BooleanArray(listCachesShowText.size)
+        tmpCaches = BooleanArray(listCachesShowText.size)
+        mUserCaches = BooleanArray(listCachesShowText.size)
 
         for (i in 0 until checkedCaches.size) {
             checkedCaches[i] = true
             mUserCaches[i] = true
             tmpCaches[i] = true
-            textView_types_of_caches.append(listCaches[i]+", ")
         }
 
         open_dialog.setOnClickListener(View.OnClickListener {
             val mBuilder = AlertDialog.Builder(context)
             mBuilder.setTitle(R.string.title_type_of_caches)
-            mBuilder.setMultiChoiceItems(listCaches, checkedCaches, DialogInterface.OnMultiChoiceClickListener { dialogInterface, position, isChecked ->
+            mBuilder.setMultiChoiceItems(listCachesShowText, checkedCaches, DialogInterface.OnMultiChoiceClickListener { dialogInterface, position, isChecked ->
                 if (isChecked) {
                     tmpCaches[position] = true
                 } else {
@@ -102,16 +102,15 @@ class TestMapWithFiltrCache : Fragment(),
             })
 
             mBuilder.setCancelable(false)
-            mBuilder.setPositiveButton("OK", DialogInterface.OnClickListener { dialogInterface, which ->
+            mBuilder.setPositiveButton(resources.getString(R.string.OK_type_of_caches), DialogInterface.OnClickListener { dialogInterface, which ->
                 var item = ""
                 for (i in 0 until mUserCaches.size) {
                     mUserCaches[i] = tmpCaches[i]
-                    if(mUserCaches[i] == true) item+=listCaches[i]
+                    if(mUserCaches[i] == true) item+=listCachesShowText[i]
                     if (i != mUserCaches.size - 1) {
                         item += ", "
                     }
                 }
-                textView_types_of_caches.setText(item)
 
                 map.clear()
 
@@ -121,31 +120,40 @@ class TestMapWithFiltrCache : Fragment(),
 
             })
 
-            mBuilder.setNegativeButton("NO", DialogInterface.OnClickListener { dialogInterface, i -> dialogInterface.dismiss() })
-
-            mBuilder.setNeutralButton("ALL", DialogInterface.OnClickListener { dialogInterface, which ->
-                textView_types_of_caches.setText("")
-                for (i in 0 until mUserCaches.size) {
+            mBuilder.setNegativeButton(resources.getString(R.string.NO_type_of_caches), DialogInterface.OnClickListener { dialogInterface, i -> dialogInterface.dismiss() })
+            /*
+            mBuilder.setNegativeButton(resources.getString(R.string.ONLY_TRADITIONAL_type_of_caches), DialogInterface.OnClickListener { dialogInterface, which ->
+                checkedCaches[0] = true
+                tmpCaches[0] = true
+                mUserCaches[0] = true
+                for (i in 1 until mUserCaches.size) {
                     checkedCaches[i] = true
                     tmpCaches[i] = true
                     mUserCaches[i] = true
-                    textView_types_of_caches.append(listCaches[i])
-                    if (i != mUserCaches.size - 1) {
-                        textView_types_of_caches.append(", ")
-                    }
                 }
 
                 map.clear()
                 for(cache in caches){
                     drawCacheMarker(cache)
-                    Log.d("XD",cache.type)
+                }
+            })*/
+
+            mBuilder.setNeutralButton(resources.getString(R.string.ALL_type_of_caches), DialogInterface.OnClickListener { dialogInterface, which ->
+                for (i in 0 until mUserCaches.size) {
+                    checkedCaches[i] = true
+                    tmpCaches[i] = true
+                    mUserCaches[i] = true
+                }
+
+                map.clear()
+                for(cache in caches){
+                    drawCacheMarker(cache)
                 }
             })
 
             val mDialog = mBuilder.create()
             mDialog.show()
         })
-
 
         //mapy
         var mapFragment : SupportMapFragment = childFragmentManager.findFragmentById(R.id.map3) as SupportMapFragment
@@ -299,12 +307,37 @@ class TestMapWithFiltrCache : Fragment(),
 
     //override fun onMarkerClick(p0: Marker?) = false
 
+    var codeLastClickMarker : String = ""
+    var doubleBackToExitPressedOnce = false
+
     override fun onMarkerClick(marker: Marker):Boolean{
 
         for (cache in caches){
             if(cache.code == marker.snippet){
-                var text:String = cache.code+"\n"+cache.name+"\n"+cache.locationS+"\n"+cache.type+"\n"+cache.status
-                Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
+
+                if(!doubleBackToExitPressedOnce) {
+                    codeLastClickMarker = marker.snippet
+                    doubleBackToExitPressedOnce = !doubleBackToExitPressedOnce
+                }
+                else if(doubleBackToExitPressedOnce && codeLastClickMarker == marker.snippet){
+                    //var text:String = cache.code+"\n"+cache.name+"\n"+cache.locationS+"\n"+cache.type+"\n"+cache.status
+                    //Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
+
+                    var cacheDetailsFragment = CacheDetailsFragment()
+
+                    var bundle = Bundle()
+                    bundle.putString("code",marker.snippet)
+                    cacheDetailsFragment.arguments = bundle
+
+                    var managerFragment = fragmentManager
+                    managerFragment.beginTransaction()
+                            .replace(R.id.relativelayout,cacheDetailsFragment,cacheDetailsFragment.tag)
+                            .addToBackStack(null)
+                            .commit()
+                }else {
+                    doubleBackToExitPressedOnce = false
+                }
+
                 return false
             }
         }
@@ -315,16 +348,13 @@ class TestMapWithFiltrCache : Fragment(),
     override fun onCameraMoveStarted(reason : Int) {
 
         if (reason == GoogleMap.OnCameraMoveStartedListener.REASON_GESTURE) {
-            Toast.makeText(context, "The user gestured on the map.",
-                    Toast.LENGTH_SHORT).show();
+            //Toast.makeText(context, "The user gestured on the map.", Toast.LENGTH_SHORT).show();
         } else if (reason == GoogleMap.OnCameraMoveStartedListener
                         .REASON_API_ANIMATION) {
-            Toast.makeText(context, "The user tapped something on the map.",
-                    Toast.LENGTH_SHORT).show();
+            //Toast.makeText(context, "The user tapped something on the map.", Toast.LENGTH_SHORT).show();
         } else if (reason == GoogleMap.OnCameraMoveStartedListener
                         .REASON_DEVELOPER_ANIMATION) {
-            Toast.makeText(context, "The app moved the camera.",
-                    Toast.LENGTH_SHORT).show();
+            //Toast.makeText(context, "The app moved the camera.", Toast.LENGTH_SHORT).show();
         }
     }
 

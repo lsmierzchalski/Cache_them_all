@@ -205,16 +205,13 @@ class TestMapsWithNearseCacheFragment : Fragment(),
     override fun onCameraMoveStarted(reason : Int) {
 
         if (reason == GoogleMap.OnCameraMoveStartedListener.REASON_GESTURE) {
-            Toast.makeText(context, "The user gestured on the map.",
-                           Toast.LENGTH_SHORT).show();
+            //Toast.makeText(context, "The user gestured on the map.", Toast.LENGTH_SHORT).show();
         } else if (reason == GoogleMap.OnCameraMoveStartedListener
                                 .REASON_API_ANIMATION) {
-            Toast.makeText(context, "The user tapped something on the map.",
-                           Toast.LENGTH_SHORT).show();
+            //Toast.makeText(context, "The user tapped something on the map.", Toast.LENGTH_SHORT).show();
         } else if (reason == GoogleMap.OnCameraMoveStartedListener
                                 .REASON_DEVELOPER_ANIMATION) {
-            Toast.makeText(context, "The app moved the camera.",
-                           Toast.LENGTH_SHORT).show();
+            //Toast.makeText(context, "The app moved the camera.", Toast.LENGTH_SHORT).show();
         }
     }
 

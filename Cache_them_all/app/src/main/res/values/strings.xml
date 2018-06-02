@@ -45,4 +45,42 @@
         <item>Moving</item>
         <item>Owncache</item>
     </string-array>
+    <string name="OK_type_of_caches">OK</string>
+    <string name="NO_type_of_caches">NO</string>
+    <string name="ALL_type_of_caches">ALL</string>
+    <string name="CLEAR_type_of_caches">ONLY TRADITIONAL</string>
+
+    <string name="loren_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</string>
+
+    <!-- opis skrzynki -->
+    <string name="name">Name: </string>
+    <string name="code">Code: </string>
+    <string name="location">Location: </string>
+    <string name="type">Type </string>
+    <string name="status">Status: </string>
+    <string name="url">Url: </string>
+    <string name="founds">Founds: </string>
+    <string name="notfounds">Notfounds: </string>
+    <string name="size">Size: </string>
+    <string name="difficulty">Difficulty: </string>
+    <string name="terrain">Terrain: </string>
+    <string name="rating">Rating: </string>
+    <string name="rating_votes">Rating votes: </string>
+    <string name="recommendations">Recommendations: </string>
+    <string name="last_found">Last found: </string>
+    <string name="last_modified">Last modifeid: </string>
+    <string name="date_created">Data created: </string>
+    <string name="date_hidden">Data hidden: </string>
+    <string name="owner_username">Owner username: </string>
+    <string name="owner_profile_url">Owner profile url: </string>
+    <string name="hint">Hint: </string>
+    <string name="short_discription">Short discription: </string>
+    <string name="description">Description: </string>
+    <string name="images">Images: </string>
+    <string name="attrnames">Attrnames: </string>
+    <string name="latest_logs">Latest logs:</string>
+    <string name="country">Country: </string>
+    <string name="state">State: </string>
+    <string name="attribution_note">Attribution note: </string>
+
 </resources>

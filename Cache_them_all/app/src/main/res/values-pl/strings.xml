@@ -20,5 +20,9 @@
         <item>Mobile</item>
         <item>Owncache</item>s
     </string-array>
+    <string name="OK_type_of_caches">TAK</string>
+    <string name="NO_type_of_caches">NIE</string>
+    <string name="ALL_type_of_caches">WSZYSTKIE</string>
+    <string name="ONLY_TRADITIONAL_type_of_caches">TYLKO TRADYCYJNE</string>
 
 </resources>

@@ -15,25 +15,17 @@
 
     <Button
         android:id="@+id/open_dialog"
-        android:layout_marginLeft="12dp"
-        android:layout_marginTop="12dp"
+        android:layout_gravity="right"
+        android:layout_marginRight="12dp"
+        android:layout_marginTop="64dp"
         android:layout_height="40dp"
         android:layout_width="40dp"
         android:orientation="horizontal"
-        android:background="#aaf5f5f5"
+        android:background="#d0ffffff"
         android:textColor="#555555"
         android:singleLine="true"
         android:textSize="18dp"
 
         android:text="…"/>
-
-    <TextView
-        android:id="@+id/textView_types_of_caches"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/open_dialog"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="97dp"
-        android:text="TextView" />
 
 </FrameLayout>

@@ -31,6 +31,10 @@
         <item
             android:id="@+id/test_map_with_filtr"
             android:title="Test Map With Filtr"/>
+
+        <item
+            android:id="@+id/detail_cahce"
+            android:title="Details Cache"/>
     </group>
 <!--
     <item android:title="Communicate">
