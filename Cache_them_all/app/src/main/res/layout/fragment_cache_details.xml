@@ -14,7 +14,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:layout_marginLeft="10dp">
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -133,6 +134,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
+                    android:autoLink="web"
                     android:textColor="@color/purple" />
             </LinearLayout>
 
@@ -223,6 +225,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
+                    android:autoLink="web"
                     android:textColor="@color/purple" />
             </LinearLayout>
 
@@ -403,6 +406,20 @@
                     android:textColor="@color/purple" />
             </LinearLayout>
 
+            <Button
+                android:id="@+id/button_logs"
+                android:text="@string/button_logs"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:orientation="horizontal"
+                android:background="@color/light_green"
+                android:textColor="@color/grey"
+                android:singleLine="true"
+                android:textSize="18dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:shadowColor="@color/brown"/>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -421,9 +438,8 @@
 
             </LinearLayout>
 
-
         </LinearLayout>
 
-
     </ScrollView>
+
 </LinearLayout>

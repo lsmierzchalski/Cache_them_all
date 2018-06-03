@@ -1,6 +1,7 @@
 package pl.wti.projekt.cache_them_all.caches
 
 import android.location.Location
+import android.util.Half.toFloat
 import com.google.android.gms.maps.model.LatLng
 
 /**
@@ -40,4 +41,25 @@ public fun stringToLatLng(stringLocation:String):LatLng{
     }
 
     return LatLng(slati.toDouble(),slong.toDouble())
+}
+
+fun tryParseInt(value: String): Boolean {
+    try {
+        Integer.parseInt(value)
+        return true
+    } catch (e: NumberFormatException) {
+        return false
+    }
+
+}
+
+
+fun tryParseFloat(value: String): Boolean {
+    try {
+        value.toFloat()
+        return true
+    } catch (e: NumberFormatException) {
+        return false
+    }
+
 }

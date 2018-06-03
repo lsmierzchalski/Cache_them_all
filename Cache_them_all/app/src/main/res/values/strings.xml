@@ -83,4 +83,11 @@
     <string name="state">State: </string>
     <string name="attribution_note">Attribution note: </string>
 
+    <!-- logi -->
+    <string name="button_logs">Logs</string>
+    <string name="log_type">Type: </string>
+    <string name="log_username">Username: </string>
+    <string name="log_date">Date: </string>
+    <string name="log_comment">Comment: </string>
+
 </resources>

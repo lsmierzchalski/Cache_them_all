@@ -15,14 +15,20 @@ import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import kotlinx.android.synthetic.main.fragment_cache_details.*
 import org.json.JSONException
-import pl.wti.projekt.cache_them_all.caches.Cache
-import pl.wti.projekt.cache_them_all.caches.stringToLocation
 import android.text.Spannable
 import pl.wti.projekt.cache_them_all.R.id.textView
 import android.text.Spanned
-import pl.wti.projekt.cache_them_all.caches.URLImageParser
-
-
+import android.util.Log
+import android.widget.ArrayAdapter
+import android.widget.Button
+import android.widget.ListView
+import com.android.volley.toolbox.JsonArrayRequest
+import org.json.JSONArray
+import org.json.JSONObject
+import pl.wti.projekt.cache_them_all.caches.*
+import android.widget.LinearLayout
+import kotlinx.android.synthetic.main.fragment_test_dialog_box.*
+import pl.wti.projekt.cache_them_all.R.string.code
 
 
 /**
@@ -51,12 +57,33 @@ class CacheDetailsFragment : Fragment() {
         return view
     }
 
-    fun showCache(code : String){
+    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        button_logs.setOnClickListener(View.OnClickListener {
+
+            var logsFragment = LogsFragment()
+
+            var bundle = Bundle()
+            bundle.putString("code",cache.code)
+            logsFragment.arguments = bundle
+
+            var managerFragment = fragmentManager
+            managerFragment.beginTransaction()
+                    .replace(R.id.relativelayout,logsFragment,logsFragment.tag)
+                    .addToBackStack(null)
+                    .commit()
+
+        })
+
+    }
+
+        fun showCache(code : String){
         val key : String = resources.getString(R.string.customer_key)
 
-        val url = "https://opencaching.pl/okapi/services/caches/geocache?cache_code=" + code + "&consumer_key=" + key + "&fields=code|name|location|type|status|needs_maintenance|url|owner|gc_code|founds|notfounds|willattends|size2|oxsize|difficulty|terrain|trip_time|trip_distance|rating|rating_votes|recommendations|req_passwd|short_description|short_descriptions|description|hints2|images|preview_image|attr_acodes|attrnames|attribution_note|latest_logs|trackables_count|trackables|alt_wpts|country|state|protection_areas|last_found|last_modified|date_created|date_hidden|internal_id"
+        var url = "https://opencaching.pl/okapi/services/caches/geocache?cache_code=" + code + "&consumer_key=" + key + "&fields=code|name|location|type|status|needs_maintenance|url|owner|gc_code|founds|notfounds|willattends|size2|oxsize|difficulty|terrain|trip_time|trip_distance|rating|rating_votes|recommendations|req_passwd|short_description|short_descriptions|description|hints2|images|preview_image|attr_acodes|attrnames|attribution_note|latest_logs|trackables_count|trackables|alt_wpts|country|state|protection_areas|last_found|last_modified|date_created|date_hidden|internal_id"
 
-        val requestCache = JsonObjectRequest(Request.Method.GET, url, null, Listener { response ->
+        var requestCache = JsonObjectRequest(Request.Method.GET, url, null, Listener { response ->
             try {
                 cache.name = response.getString("name").toString()
                 cache.locationS = response.getString("location")
@@ -77,6 +104,10 @@ class CacheDetailsFragment : Fragment() {
                 cache.date_created = response.getString("date_created")
                 cache.date_hidden = response.getString("date_hidden")
 
+                val json_owner = response.getJSONObject("owner")
+                cache.owner_username = json_owner.getString("username")
+                cache.owner_profile_url = json_owner.getString("profile_url")
+
                 cache.short_description = response.getString("short_description")
                 cache.description = response.getString("description")
 
@@ -88,19 +119,21 @@ class CacheDetailsFragment : Fragment() {
                 tv_status.setText(cache.status)
                 tv_url.setText(cache.url)
                 tv_founds.setText(cache.founds)
-
                 tv_notfounds.setText(cache.notfounds)
                 tv_size.setText(cache.size)
                 tv_difficulty.setText(cache.difficulty)
                 tv_terrain.setText(cache.terrain)
                 tv_rating.setText(cache.rating)
-                ratingBar.setRating(cache.rating.toFloat())
+                if(tryParseFloat(cache.rating)) ratingBar.setRating(cache.rating.toFloat())
                 tv_rating_votes.setText(cache.rating_votes)
                 tv_recommendations.setText(cache.recommendations)
                 tv_last_found.setText(cache.last_found)
                 tv_last_modified.setText(cache.last_modified)
                 tv_date_created.setText(cache.date_created)
                 tv_date_hidden.setText(cache.date_hidden)
+
+                tv_owner_username.setText(cache.owner_username)
+                tv_owner_profile_url.setText(cache.owner_profile_url)
 
                 val p = URLImageParser(tv_description, context)
                 val htmlSpan = Html.fromHtml(cache.description, p, null)
@@ -116,7 +149,5 @@ class CacheDetailsFragment : Fragment() {
         mQueue.add(requestCache)
 
     }
-
-
 
 }// Required empty public constructor
